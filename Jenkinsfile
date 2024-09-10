@@ -33,7 +33,7 @@ sshagent(credentials: ['Vagrant_ssh']) {
  sh "ssh user@Ip_Recette ‘sudo docker run “image_name:${DOCKER_TAG}"’”
 } 
 } }
-}
+
 
  def getVersion(){
  def version = sh returnStdout: true, script: 'git rev-parse --short HEAD'
