@@ -1,11 +1,17 @@
+pipeline {
+ agent any
+ tools{ jdk 'JDK22' }
+environment { 
+
+DOCKER_TAG = getVersion()
+ }
+
 stage ('Clone Stage') {
  steps {
  git 'https://github.com/yesserabbes/CiCD.git'
  }
  }
-environment {
- DOCKER_TAG = getVersion()
-}
+
 
 stage ('Docker Build') {
  steps {
@@ -27,7 +33,9 @@ sshagent(credentials: ['Vagrant_ssh']) {
  sh "ssh user@Ip_Recette ‘sudo docker run “image_name:${DOCKER_TAG}"’”
 } 
 } }
+}
 
+ def getVersion(){
  def version = sh returnStdout: true, script: 'git rev-parse --short HEAD'
  return version
 }
